@@ -27,3 +27,8 @@ docker image prune
 
 #### Quick, complete system pruning (caution)
 docker system prune (--filter 168h)
+
+
+#### Docker Compose Run
+docker-compose up
+docker-compose up -d

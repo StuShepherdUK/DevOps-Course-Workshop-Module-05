@@ -1,10 +1,14 @@
 FROM ubuntu:xenial
-RUN apt-get update && apt-get install -y jq curl
+RUN apt-get update && apt-get install -y jq curl cron
 WORKDIR /opt/chimera/bin
 RUN curl --fail https://devops-cli-workshop.s3.eu-west-2.amazonaws.com/cliapp --output cliapp
 RUN chmod +x cliapp
 ENV DATA_FOLDER=/opt/chimera/data
 RUN mkdir /var/log/chimera
+RUN touch /var/log/cron.log
+RUN chmod 644 /var/log/cron.log
+COPY ./run_cliapp /etc/cron.d/run_cliapp
+RUN crontab /etc/cron.d/run_cliapp
 COPY ./run.sh ./run.sh
 RUN chmod +x ./run.sh
-ENTRYPOINT ["./run.sh"]
+CMD printenv >> /etc/environment && cron && tail -f /var/log/cron.log
