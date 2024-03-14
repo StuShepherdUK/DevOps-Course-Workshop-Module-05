@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  cliapp:
+    platform: linux/amd64
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile.cliapp
+    image: cliapp:latest
+    volumes:
+      - type: volume
+        source: shared_cli_data_volume
+        target: /opt/chimera/data
+  webapp:
+    platform: linux/amd64
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile.webapp
+    image: webapp:latest
+    volumes:
+      - type: volume
+        source: shared_cli_data_volume
+        target: /opt/chimera/data
+    ports:
+      - "80:80"
+volumes:
+  shared_cli_data_volume:
+
