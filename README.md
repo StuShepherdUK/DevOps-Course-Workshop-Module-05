@@ -32,3 +32,5 @@ docker system prune (--filter 168h)
 #### Docker Compose Run
 docker-compose up
 docker-compose up -d
+docker-compose up --build
+docker-compose down
